@@ -132,7 +132,7 @@ const RootMutation = new GraphQLObjectType({
     addItemtoCart: {
       type: CartType,
       args: {
-        productId: { type: GraphQLNonNull(GraphQLID) },
+        productId: { type: GraphQLNonNull(GraphQLString) },
         userId: { type: GraphQLNonNull(GraphQLString) },
         name: { type: GraphQLNonNull(GraphQLString) },
         imageUrl: { type: GraphQLNonNull(GraphQLString) },
@@ -168,6 +168,16 @@ const RootMutation = new GraphQLObjectType({
           },
           { new: true }
         );
+      },
+    },
+
+    deleteCart: {
+      type: CartType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parent, args) {
+        return Cart.findByIdAndRemove(args.id);
       },
     },
 
